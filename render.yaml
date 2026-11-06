@@ -1,0 +1,26 @@
+# Render Blueprint: New > Blueprint > pick this repo. Free plan, Docker runtime.
+services:
+  - type: web
+    name: taskpilot-api
+    runtime: docker
+    plan: free
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    healthCheckPath: /api/health
+    envVars:
+      - key: LLM_PROVIDER
+        value: gemini
+      - key: GEMINI_API_KEY
+        sync: false            # paste in the Render dashboard
+      - key: CORS_ORIGINS
+        sync: false            # e.g. https://taskpilot-yourname.vercel.app
+      - key: PUBLIC_BASE_URL
+        sync: false            # e.g. https://taskpilot-api.onrender.com
+      - key: ACCESS_CODE
+        sync: false            # optional
+      - key: BLOCK_HEAVY_RESOURCES
+        value: "true"          # keeps Chromium inside the free 512 MB
+      - key: MAX_CONCURRENT_RUNS
+        value: "1"
+      - key: RATE_LIMIT_PER_HOUR
+        value: "20"
